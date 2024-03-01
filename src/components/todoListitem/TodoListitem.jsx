@@ -8,10 +8,14 @@ export default class TodoListitem extends Component {
       if (this.props.important){
          clazz+='imp';
       } 
+      if (this.props.done){
+        clazz+='done';
+      }
       
     return (
         <span className="d-flex align-items-center">
-          <span className={`flex-grow-1 ${clazz}`}>{this.props.title}</span>
+          <span onClick={()=>this.props.onDoneTodo(this.props.id)}
+          className={`flex-grow-1 ${clazz}  `}>{this.props.title}</span>
           <button 
           className="btn btn-outline-danger" 
           onClick={()=>this.props.onDel(this.props.id)}>

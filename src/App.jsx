@@ -47,6 +47,14 @@ export default class App extends Component {
   this.setState({todoData:[...before, updTodo, ...after]}); 
   };
 
+  doneTodo=(id)=>{
+    const index = this.state.todoData.findIndex((el) => el.id === id);
+    const before = this.state.todoData.slice(0, index);
+    const after = this.state.todoData.slice(index + 1);
+    const todo = this.state.todoData[index]
+    const updTodo={...todo, done: !todo.done};
+    this.setState({todoData:[...before, updTodo, ...after]}); 
+  }
 
   render() {
     return (
@@ -57,6 +65,7 @@ export default class App extends Component {
         todos={this.state.todoData} 
         onDelTodo={this.delTodo} 
         onImpTodo={this.importantTodo}
+        onDoneTodo={this.doneTodo}
         />
         <TodoAdd onAddTodo={this.addTodo}/>
       </div>

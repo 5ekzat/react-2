@@ -15,6 +15,7 @@ const TodoList = (props) => {
           {...el}
            onDel={props.onDelTodo}
            onImpTodo={props.onImpTodo}
+           onDoneTodo={props.onDoneTodo}
            />
            
         </li>
