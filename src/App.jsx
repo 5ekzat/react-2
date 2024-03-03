@@ -15,7 +15,17 @@ export default class App extends Component {
     {title:'Learn Vue', id:3, done:false, important:false},
     {title:'Learn Angular', id:4, done:false, important:false},
   ],
+    filter: 'all',
+    searchText: ''
  };
+ searchTodos = searchText => {
+  this.setState({ searchText });
+};
+
+  
+ filterTodos = filter => {
+  this.setState({ filter });
+};
 
   delTodo = (id) => {
     const newTodoData=this.state.todoData.filter((el)=>el.id!==id)
@@ -57,12 +67,30 @@ export default class App extends Component {
   }
 
   render() {
+    const { todoData, filter, searchText } = this.state;
+
+    let filteredTodos = todoData;
+    if (filter === 'active') {
+      filteredTodos = todoData.filter(todo => !todo.done);
+    } else if (filter === 'done') {
+      filteredTodos = todoData.filter(todo => todo.done);
+    }
+  
+    if (searchText) {
+      filteredTodos = filteredTodos.filter(todo =>
+        todo.title.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+
+  const done = todoData.filter(el => el.done).length;
+  const active = todoData.length - done;
+
     return (
       <div style={{width: '500px', margin: '0 auto'}}>
-        <AppHeader/>
-        <SearchTodo/>
+        <AppHeader done={done} active={active}/>
+        <SearchTodo onSearch={this.searchTodos} onFilter={this.filterTodos}/>
         <TodoList 
-        todos={this.state.todoData} 
+        todos={filteredTodos}  
         onDelTodo={this.delTodo} 
         onImpTodo={this.importantTodo}
         onDoneTodo={this.doneTodo}
