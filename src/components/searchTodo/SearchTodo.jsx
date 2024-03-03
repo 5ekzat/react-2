@@ -15,7 +15,7 @@ export default class SearchTodo extends Component {
 
   handleSearch = () => {
     this.props.onSearch(this.state.searchText);
-    this.setState({ searchText: '' }); // Сбрасываем текст поиска после выполнения поиска
+    this.setState({ searchText: '' }); 
   };
 
   
